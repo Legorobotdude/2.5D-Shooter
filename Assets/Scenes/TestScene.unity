@@ -1177,7 +1177,7 @@ GameObject:
   - component: {fileID: 1909585303}
   - component: {fileID: 1909585310}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1575,6 +1575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalMovementSpeed: 10000
   canJump: 1
+  canJumpInAir: 1
   jumpForce: 100000
 --- !u!43 &1914025229
 Mesh:
