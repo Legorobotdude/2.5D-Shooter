@@ -7,6 +7,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 
+    [SerializeField]Animator anim;
+
 	[SerializeField]float horizontalMovementSpeed = 10f;
 	[SerializeField]bool canJump = true;
 	[SerializeField]bool canJumpInAir = true;
@@ -17,6 +19,10 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
+        if (anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
 	}
 	
 	// Update is called once per frame
@@ -27,7 +33,9 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleHorizontalMovement()
     {
-        rigidBody.AddForce(new Vector3(horizontalMovementSpeed*Input.GetAxis("Horizontal")*Time.deltaTime,0,0));
+        float speed = Input.GetAxis("Horizontal");
+        rigidBody.AddForce(new Vector3(horizontalMovementSpeed*speed*Time.deltaTime,0,0));
+        anim.SetFloat("Speed", speed);
     }
 
     private void HandleVerticalMovement()
