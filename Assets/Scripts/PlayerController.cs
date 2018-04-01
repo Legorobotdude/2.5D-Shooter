@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 
 
     [SerializeField]Animator anim;
+    int jumpHash = Animator.StringToHash("Jump");
 
 	[SerializeField]float horizontalMovementSpeed = 10f;
 	[SerializeField]bool canJump = true;
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir)
 		{
 			rigidBody.AddForce(new Vector3(0,jumpForce*Time.deltaTime,0));
+            anim.SetTrigger(jumpHash);
 		}
 		else if(Input.GetButtonDown("Jump")&&canJump)
 		{
