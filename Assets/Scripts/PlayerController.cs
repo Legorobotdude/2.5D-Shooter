@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
 
     bool isGrounded;
     int jumpCounter = 0;
+    Camera mainCamera;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour {
         {
             anim = GetComponent<Animator>();
         }
+        mainCamera = Camera.main;
 	}
 	
 	// Update is called once per frame
@@ -38,10 +41,25 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleHorizontalMovement()
     {
+        //float camDis = mainCamera.transform.position.z - transform.position.z;
+        Vector3 mouse = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.farClipPlane));//Calculate the position of the cursor relative to the player
+        //Debug.Log(mouse+","+transform.position);
+
         float speed = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector3(horizontalMovementSpeed * speed, rigidBody.velocity.y, 0);
-       
-        anim.SetFloat("Speed", speed);
+       if (mouse.x>=0)//Point the player towards the cursor
+        {
+            anim.SetFloat("Speed", speed);
+            if (transform.localScale.x<0)
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.y);
+        }
+       else
+        {
+            anim.SetFloat("Speed", -speed);
+            if (transform.localScale.x>0)
+                transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.y);
+        }
+            
     }
 
     private void HandleVerticalMovement()
