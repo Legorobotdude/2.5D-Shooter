@@ -46,15 +46,15 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleVerticalMovement()
     {
-        if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir&&jumpCounter<=maxJumps)
+        if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir&&jumpCounter<maxJumps)
 		{
-			rigidBody.AddForce(new Vector3(0,jumpForce*Time.deltaTime,0));
+			rigidBody.AddForce(new Vector3(0,jumpForce,0));
             anim.SetTrigger(jumpHash);
             jumpCounter++;
 		}
 		else if(Input.GetButtonDown("Jump")&&canJump&&isGrounded)
 		{
-            rigidBody.AddForce(new Vector3(0, jumpForce * Time.deltaTime, 0));
+            rigidBody.AddForce(new Vector3(0, jumpForce, 0));
             anim.SetTrigger(jumpHash);
         }
     }

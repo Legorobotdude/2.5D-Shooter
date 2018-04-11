@@ -1411,7 +1411,7 @@ MonoBehaviour:
   canJump: 1
   canJumpInAir: 1
   maxJumps: 2
-  jumpForce: 250000
+  jumpForce: 1500
 --- !u!43 &2056857405
 Mesh:
   m_ObjectHideFlags: 0
