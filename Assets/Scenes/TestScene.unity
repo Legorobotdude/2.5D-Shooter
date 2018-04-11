@@ -911,13 +911,13 @@ GameObject:
   - component: {fileID: 1409355837}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 127
   m_IsActive: 1
---- !u!64 &1409355837
-MeshCollider:
+--- !u!65 &1409355837
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -925,11 +925,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 2056857405}
+  serializedVersion: 2
+  m_Size: {x: 22.14134, y: 1, z: 9}
+  m_Center: {x: 11.07067, y: 0.5, z: 2.5}
 --- !u!114 &1409355838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1410,7 @@ MonoBehaviour:
   horizontalMovementSpeed: 10
   canJump: 1
   canJumpInAir: 1
+  maxJumps: 2
   jumpForce: 250000
 --- !u!43 &2056857405
 Mesh:

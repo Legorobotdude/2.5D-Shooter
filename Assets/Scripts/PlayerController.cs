@@ -13,9 +13,13 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField]float horizontalMovementSpeed = 10f;
 	[SerializeField]bool canJump = true;
 	[SerializeField]bool canJumpInAir = true;
+    [SerializeField][Tooltip("Only applies if canJumpInAir=true")] int maxJumps = 2;
 	[SerializeField]float jumpForce = 100f;
 
 	Rigidbody rigidBody;
+
+    bool isGrounded;
+    int jumpCounter = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -42,15 +46,39 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleVerticalMovement()
     {
-        if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir)
+        if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir&&jumpCounter<=maxJumps)
 		{
 			rigidBody.AddForce(new Vector3(0,jumpForce*Time.deltaTime,0));
-            //rigidBody.velocity = 
             anim.SetTrigger(jumpHash);
+            jumpCounter++;
 		}
-		else if(Input.GetButtonDown("Jump")&&canJump)
+		else if(Input.GetButtonDown("Jump")&&canJump&&isGrounded)
 		{
+            rigidBody.AddForce(new Vector3(0, jumpForce * Time.deltaTime, 0));
+            anim.SetTrigger(jumpHash);
+        }
+    }
 
-		}
+    void OnCollisionEnter(Collision collision)
+    {
+
+        //Debug.Log("Collision Entered");
+        //Debug.Log(collision.collider.tag);
+        
+
+        if (collision.collider.tag == "Ground")
+        {
+           isGrounded = true;
+            jumpCounter = 0;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag == "Ground")
+        {
+            isGrounded = false;
+
+        }
     }
 }
