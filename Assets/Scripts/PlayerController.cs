@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour {
     private void HandleHorizontalMovement()
     {
         float speed = Input.GetAxis("Horizontal");
-        rigidBody.AddForce(new Vector3(horizontalMovementSpeed*speed*Time.deltaTime,0,0));
+        rigidBody.velocity = new Vector3(horizontalMovementSpeed * speed, rigidBody.velocity.y, 0);
+       
         anim.SetFloat("Speed", speed);
     }
 
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir)
 		{
 			rigidBody.AddForce(new Vector3(0,jumpForce*Time.deltaTime,0));
+            //rigidBody.velocity = 
             anim.SetTrigger(jumpHash);
 		}
 		else if(Input.GetButtonDown("Jump")&&canJump)
