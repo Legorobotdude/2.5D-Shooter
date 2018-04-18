@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     bool isGrounded;
     int jumpCounter = 0;
     Camera mainCamera;
+    bool isFacingBackward = false;
 
     // Use this for initialization
     void Start () {
@@ -47,14 +48,29 @@ public class PlayerController : MonoBehaviour {
         if (mouse.x >= 0) //Point the player towards the cursor
         {
             anim.SetFloat ("Speed", speed);
-            if (transform.localScale.z < 0) {
-                transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+            Debug.Log("Facing Forward");
+            // if (transform.localScale.z < 0) {
+            //     transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+            // }
+            Debug.Log(transform.rotation.eulerAngles.y);
+            if (Math.Abs(transform.rotation.eulerAngles.y - 270f) <= 1f)//transform.rotation.eulerAngles.y.Equals(-90f)
+            {
+                transform.Rotate(new Vector3(0f,180f,0f));
+                Debug.Log("Rotate to face forward");
+
             }
         } else {
+             Debug.Log("Facing Back");
             anim.SetFloat ("Speed", -speed);
-            if (transform.localScale.z > 0)
+            // if (transform.localScale.z > 0)
+            // {
+            //     transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+            // }
+            Debug.Log(transform.rotation.eulerAngles.y);
+            if (Math.Abs(transform.rotation.eulerAngles.y - 90f) <= 1f)
             {
-                transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+                transform.Rotate(new Vector3(0f,180f,0f));
+
             }
         }
 
