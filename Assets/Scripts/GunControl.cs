@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunControl : MonoBehaviour {
 
 	public GameObject target;
+	public float zDistance = 10f;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,9 @@ public class GunControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.LookAt(target.transform);
+
+		var mousePos = Input.mousePosition;
+    	transform.LookAt(Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, zDistance)));
+		//transform.LookAt(target.transform);
 	}
 }

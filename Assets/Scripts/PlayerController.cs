@@ -6,95 +6,84 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    [SerializeField] Animator anim;
+    int jumpHash = Animator.StringToHash ("Jump");
 
-    [SerializeField]Animator anim;
-    int jumpHash = Animator.StringToHash("Jump");
+    [SerializeField] float horizontalMovementSpeed = 10f;
+    [SerializeField] bool canJump = true;
+    [SerializeField] bool canJumpInAir = true;
+    [SerializeField][Tooltip ("Only applies if canJumpInAir=true")] int maxJumps = 2;
+    [SerializeField] float jumpForce = 100f;
+    [SerializeField] GameObject gun;
 
-	[SerializeField]float horizontalMovementSpeed = 10f;
-	[SerializeField]bool canJump = true;
-	[SerializeField]bool canJumpInAir = true;
-    [SerializeField][Tooltip("Only applies if canJumpInAir=true")] int maxJumps = 2;
-	[SerializeField]float jumpForce = 100f;
-
-	Rigidbody rigidBody;
+    Rigidbody rigidBody;
 
     bool isGrounded;
     int jumpCounter = 0;
     Camera mainCamera;
-    
 
-	// Use this for initialization
-	void Start () {
-		rigidBody = GetComponent<Rigidbody>();
-        if (anim == null)
-        {
-            anim = GetComponent<Animator>();
+    // Use this for initialization
+    void Start () {
+        rigidBody = GetComponent<Rigidbody> ();
+        if (anim == null) {
+            anim = GetComponent<Animator> ();
         }
         mainCamera = Camera.main;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		HandleVerticalMovement();
-		HandleHorizontalMovement();
-	}
+    }
 
-    private void HandleHorizontalMovement()
-    {
+    // Update is called once per frame
+    void Update () {
+        HandleVerticalMovement ();
+        HandleHorizontalMovement ();
+    }
+
+    private void HandleHorizontalMovement () {
         //float camDis = mainCamera.transform.position.z - transform.position.z;
-        Vector3 mouse = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.farClipPlane));//Calculate the position of the cursor relative to the player
+        Vector3 mouse = mainCamera.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, mainCamera.farClipPlane)); //Calculate the position of the cursor relative to the player
         //Debug.Log(mouse+","+transform.position);
 
-        float speed = Input.GetAxis("Horizontal");
-        rigidBody.velocity = new Vector3(horizontalMovementSpeed * speed, rigidBody.velocity.y, 0);
-       if (mouse.x>=0)//Point the player towards the cursor
+        float speed = Input.GetAxis ("Horizontal");
+        rigidBody.velocity = new Vector3 (horizontalMovementSpeed * speed, rigidBody.velocity.y, 0);
+        if (mouse.x >= 0) //Point the player towards the cursor
         {
-            anim.SetFloat("Speed", speed);
-            if (transform.localScale.x<0)
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.y);
+            anim.SetFloat ("Speed", speed);
+            if (transform.localScale.z < 0) {
+                transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+            }
+        } else {
+            anim.SetFloat ("Speed", -speed);
+            if (transform.localScale.z > 0)
+            {
+                transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+            }
         }
-       else
-        {
-            anim.SetFloat("Speed", -speed);
-            if (transform.localScale.x>0)
-                transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.y);
-        }
-            
+
     }
 
-    private void HandleVerticalMovement()
-    {
-        if(Input.GetButtonDown("Jump")&&canJump&&canJumpInAir&&jumpCounter<maxJumps)
-		{
-			rigidBody.AddForce(new Vector3(0,jumpForce,0));
-            anim.SetTrigger(jumpHash);
+    private void HandleVerticalMovement () {
+        if (Input.GetButtonDown ("Jump") && canJump && canJumpInAir && jumpCounter < maxJumps) {
+            rigidBody.AddForce (new Vector3 (0, jumpForce, 0));
+            anim.SetTrigger (jumpHash);
             jumpCounter++;
-		}
-		else if(Input.GetButtonDown("Jump")&&canJump&&isGrounded)
-		{
-            rigidBody.AddForce(new Vector3(0, jumpForce, 0));
-            anim.SetTrigger(jumpHash);
+        } else if (Input.GetButtonDown ("Jump") && canJump && isGrounded) {
+            rigidBody.AddForce (new Vector3 (0, jumpForce, 0));
+            anim.SetTrigger (jumpHash);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
+    void OnCollisionEnter (Collision collision) {
 
         //Debug.Log("Collision Entered");
         //Debug.Log(collision.collider.tag);
-        
 
-        if (collision.collider.tag == "Ground")
-        {
-           isGrounded = true;
+        if (collision.collider.tag == "Ground") {
+            isGrounded = true;
             jumpCounter = 0;
         }
     }
 
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.tag == "Ground")
-        {
+    void OnCollisionExit (Collision collision) {
+        if (collision.collider.tag == "Ground") {
             isGrounded = false;
 
         }
