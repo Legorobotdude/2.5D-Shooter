@@ -48,25 +48,25 @@ public class PlayerController : MonoBehaviour {
         if (mouse.x >= 0) //Point the player towards the cursor
         {
             anim.SetFloat ("Speed", speed);
-            Debug.Log("Facing Forward");
+            //Debug.Log("Facing Forward");
             // if (transform.localScale.z < 0) {
             //     transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
             // }
-            Debug.Log(transform.rotation.eulerAngles.y);
+            //Debug.Log(transform.rotation.eulerAngles.y);
             if (Math.Abs(transform.rotation.eulerAngles.y - 270f) <= 1f)//transform.rotation.eulerAngles.y.Equals(-90f)
             {
                 transform.Rotate(new Vector3(0f,180f,0f));
-                Debug.Log("Rotate to face forward");
+                //Debug.Log("Rotate to face forward");
 
             }
         } else {
-             Debug.Log("Facing Back");
+             //Debug.Log("Facing Back");
             anim.SetFloat ("Speed", -speed);
             // if (transform.localScale.z > 0)
             // {
             //     transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, -transform.localScale.z);
             // }
-            Debug.Log(transform.rotation.eulerAngles.y);
+            //Debug.Log(transform.rotation.eulerAngles.y);
             if (Math.Abs(transform.rotation.eulerAngles.y - 90f) <= 1f)
             {
                 transform.Rotate(new Vector3(0f,180f,0f));
