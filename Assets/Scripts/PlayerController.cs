@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     bool isGrounded;
     int jumpCounter = 0;
     Camera mainCamera;
-    bool isFacingBackward = false;
+    //bool isFacingBackward = false;
 
     // Use this for initialization
     void Start () {
