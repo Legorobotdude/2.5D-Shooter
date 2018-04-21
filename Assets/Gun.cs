@@ -6,7 +6,12 @@ public class Gun : MonoBehaviour {
 
     [SerializeField]GameObject bulletGameObject;
     [SerializeField] Transform muzzle;
-    [SerializeField]float firingForce = 100f;
+    [SerializeField] float firingForce = 100f;
+    [SerializeField] AudioClip gunShot;
+    [SerializeField] float damage = 10f;
+    [SerializeField] protected bool semiAutoFire = true;
+    [SerializeField] protected bool burstFire = true;
+    [SerializeField] protected bool autoFire = true;
 
     // Use this for initialization
     void Start () {
