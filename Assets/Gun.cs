@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour {
         {
             //spawn bullet
             var bullet = Instantiate(bulletGameObject,muzzle.position,muzzle.rotation);
-            bullet.GetComponent<Rigidbody>().AddForce(firingForce * Vector3.right);
+            bullet.GetComponent<Rigidbody>().AddForce(firingForce * bullet.transform.right);
         }
 		
 	}
